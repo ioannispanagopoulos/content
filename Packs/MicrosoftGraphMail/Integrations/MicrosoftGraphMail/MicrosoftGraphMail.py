@@ -11,7 +11,7 @@ urllib3.disable_warnings()
 
 class MsGraphMailClient(MsGraphMailBaseClient):
     @logger
-    def fetch_incidents(self, last_run, fetch_single_incident):
+    def fetch_incidents(self, last_run: dict, fetch_single_incident: bool):
         """
         Fetches emails from office 365 mailbox and creates incidents of parsed emails.
         :type last_run: ``dict``
@@ -126,7 +126,14 @@ class MsGraphMailClient(MsGraphMailBaseClient):
         return next_run, incidents
 
 
-def fetch_incident(args, fetch_single_incident):
+def fetch_incident(args, fetch_single_incident: bool):
+    """
+    Fetches single email from office 365 mailbox.
+    :type fetch_single_incident: ``bool``
+    :param fetch_single_incident: Fetch a single email as incident
+
+    :return: CommandResults object with fetched email details
+    """
     message_id = args.get("message_id")
 
     if not message_id:
